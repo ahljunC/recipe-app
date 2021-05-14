@@ -1,0 +1,32 @@
+.search-container {
+    border: solid red 1px;
+    height: 200px;
+
+    .search-fields-container {
+        align-items: center;
+
+        .field-top-row {
+            display: flex;
+            
+            .single-dropdown-wrapper {
+                margin: .5rem 1rem;
+                
+                .single-dropdown {
+                    width: 10rem;
+                }
+            }
+        }
+
+        .field-bottom-row {
+            display: flex;
+            
+            .double-dropdown-wrapper {
+                margin: .5rem 1rem;
+
+                .double-dropdown {
+                    width: 5rem;
+                }
+            }
+        }
+    }
+}

@@ -51,6 +51,16 @@ exports.index = (req, res) => {
 }
 
 exports.searchRecipes = (req, res) => {
+    // const diet = req.params;
+    // const cuisine = req.params;
+    // const intolerence = req.params;
+    // const minKcal = req.params;
+    // const maxKcal = req.params;
+    // const minProtein = req.params;
+    // const maxProtein = req.params;
+    // const minCarbs = req.params;
+    // const maxCarbs = req.params;
+
     request(
         `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=2&addRecipeNutrition=true`,
         function(error, response, body) {

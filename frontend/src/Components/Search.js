@@ -1,34 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from "axios";
 
-// export default class Search extends Component {
-//     constructor() {
-//         super();
-//         this.state = {
-//             recipe: "Not found"
-//         };
-//     }
-
-//     handleButtonClick = () => {
-//         axios.get("/recipe/search").then(response => {
-//             this.setState({
-//                 recipe: response.data.recipe_title
-//             })
-//             // console.log(response.data.recipe_name);
-//             // console.log(response.data.recipe_title);
-//         });
-//     };
-
-//     render() {
-//         return (
-//             <div onClick={this.handleButtonClick}>
-//                 <button>Get recipe</button>
-//                 <h1>The name of the recipe is: {this.state.recipe} </h1>
-//             </div>
-//         )
-//     }
-// }
-
 export default function Search() {
 
     const [diets] = useState([
@@ -88,15 +60,15 @@ export default function Search() {
     ]);
 
     const [calories] = useState([
-        { label: "50kCal", value: 50 },
-        { label: "100kCal", value: 100 },
-        { label: "200kCal", value: 200 },
-        { label: "300kCal", value: 300 },
-        { label: "400kCal", value: 400 },
-        { label: "500kCal", value: 500 },
-        { label: "600kCal", value: 600 },
-        { label: "700kCal", value: 700 },
-        { label: "800kCal", value: 800 },
+        { label: "50Cal", value: 50 },
+        { label: "100Cal", value: 100 },
+        { label: "200Cal", value: 200 },
+        { label: "300Cal", value: 300 },
+        { label: "400Cal", value: 400 },
+        { label: "500Cal", value: 500 },
+        { label: "600Cal", value: 600 },
+        { label: "700Cal", value: 700 },
+        { label: "800Cal", value: 800 },
     ]);
 
     const [protein] = useState([
@@ -126,26 +98,73 @@ export default function Search() {
     ]);
 
     const [selectedDiet, setSelectedDiet] = useState("");
+    const [selectedCuisine, setSelectedCuisine] = useState("");
+    const [selectedIntolerance, setSelectedIntolerance] = useState("");
+
+    const [selectedMinCal, setSelectedMinCal] = useState("");
+    const [selectedMaxCal, setSelectedMaxCal] = useState("");
+
+    const [selectedMinProt, setSelectedMinProt] = useState("");
+    const [selectedMaxProt, setSelectedMaxProt] = useState("");
+
+    const [selectedMinCarbs, setSelectedMinCarbs] = useState("");
+    const [selectedMaxCarbs, setSelectedMaxCarbs] = useState("");
 
     const handleChange = (event) => {
-        // setSelectedDiet(event.target.value);
-        console.log(event);
+        switch(event.currentTarget.name) {
+            case "selectedDiet":
+                setSelectedDiet(event.target.value);
+                break;
+            case "selectedCuisine":
+                setSelectedCuisine(event.target.value);
+                break;
+            case "selectedIntolerance":
+                setSelectedIntolerance(event.target.value);
+                break;
+            case "selectedMinCal":
+                setSelectedMinCal(event.target.value);
+                break;
+            case "selectedMaxCal":
+                setSelectedMaxCal(event.target.value);
+                break;                
+            case "selectedMinProt":
+                setSelectedMinProt(event.target.value);
+                break;
+            case "selectedMaxProt":
+                setSelectedMaxProt(event.target.value);
+                break;
+            case "selectedMinCarbs":
+                setSelectedMinCarbs(event.target.value);
+                break;
+            case "selectedMaxCarbs":
+                setSelectedMaxCarbs(event.target.value);
+                break;
+        }
+
+        alert(event.target.value);
     }
 
     const handleSubmit = (event) => {
-        event.preventDefault();
-        
-        alert(`Submitting Diet ${selectedDiet}`);
-    }
+        alert(selectedDiet);
 
-    // useEffect(() => {
-    //     async function getDropdownData() {
-    //         const response = await axios.get("/index");
-    //         const data = response.data;
-    //         console.log(data);
-    //     }
-    //     getDropdownData();
-    // }, []);
+        axios.get('/recipe/search', {
+            params: {
+                diet: selectedDiet,
+                cuisine: selectedCuisine,
+                intolerance: selectedIntolerance,
+                minCal: selectedMinCal,
+                maxcal: selectedMaxCal,
+                minProt: selectedMinProt,
+                maxProt: selectedMaxProt,
+                minCarbs: selectedMinCarbs,
+                maxCarbs: selectedMaxCarbs
+            }
+        }).then(function (response) {
+            console.log(response);
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
 
     return (
         <div className='search-container'>
@@ -153,24 +172,24 @@ export default function Search() {
                 <div className='search-fields-container'>
                     <div className='field-top-row'>
                         <div className="single-dropdown-wrapper">
-                            <select name="selectedDiet" className="single-dropdown" placeholder="Diet">
-                                {/* <option default>Diet</option> */}
+                            <select name="selectedDiet" onChange={handleChange} className="single-dropdown" placeholder="Diet">
+                                <option disabled selected value>Diet</option>
                                 {diets.map(diet => (
                                     <option key={diet.diet_name} value={diet.diet_name}>{diet.diet_name}</option>
                                 ))}
                             </select>
                         </div>
                         <div className="single-dropdown-wrapper">
-                            <select className="single-dropdown">
-                                <option default>Cuisine</option>
+                            <select name="selectedCuisine" onChange={handleChange} className="single-dropdown">
+                                <option disabled selected value>Cuisine</option>
                                 {cuisines.map(cuisine => (
                                     <option key={cuisine.cuisine_name} value={cuisine.cuisine_name}>{cuisine.cuisine_name}</option>
                                 ))}
                             </select>
                         </div>
                         <div className="single-dropdown-wrapper">
-                            <select className="single-dropdown">
-                                <option default>Intolerence</option>
+                            <select name="selectedIntolerance" onChange={handleChange} className="single-dropdown">
+                                <option disabled selected value>Intolerance</option>
                                 {intolerances.map(intolerances => (
                                     <option key={intolerances.intolerances_name} value={intolerances.intolerances_name}>{intolerances.intolerances_name}</option>
                                 ))}
@@ -179,42 +198,42 @@ export default function Search() {
                     </div>
                     <div className='field-bottom-row'>
                         <div className="double-dropdown-wrapper">
-                            <select className="double-dropdown">
-                                <option default>Min Calories</option>
+                            <select name="selectedMinCal" onChange={handleChange} className="double-dropdown">
+                                <option disabled selected value>Min Calories</option>
                                 {calories.map(calories => (
                                     <option key={calories.value} value={calories.value}>{calories.label}</option>
                                 ))}
                             </select>
-                            <select className="double-dropdown">
-                                <option default>Max Calories</option>
+                            <select name="selectedMaxCal" onChange={handleChange} className="double-dropdown">
+                                <option disabled selected value>Max Calories</option>
                                 {calories.map(calories => (
                                     <option key={calories.value} value={calories.value}>{calories.label}</option>
                                 ))}
                             </select>
                         </div>
                         <div className="double-dropdown-wrapper">
-                            <select className="double-dropdown">
-                                <option default>Min Protein</option>
+                            <select name="selectedMinProt" onChange={handleChange} className="double-dropdown">
+                                <option disabled selected value>Min Protein</option>
                                 {protein.map(protein => (
                                     <option key={protein.value} value={protein.value}>{protein.label}</option>
                                 ))}
                             </select>
-                            <select className="double-dropdown">
-                                <option default>Max Protein</option>
+                            <select name="selectedMaxProt" onChange={handleChange} className="double-dropdown">
+                                <option disabled selected value>Max Protein</option>
                                 {protein.map(protein => (
                                     <option key={protein.value} value={protein.value}>{protein.label}</option>
                                 ))}
                             </select>
                         </div>
                         <div className="double-dropdown-wrapper">
-                            <select className="double-dropdown">
-                                <option default>Min Carbs</option>
+                            <select name="selectedMinCarbs" onChange={handleChange} className="double-dropdown">
+                                <option disabled selected value>Min Carbs</option>
                                 {carbs.map(carbs => (
                                     <option key={carbs.value} value={carbs.value}>{carbs.label}</option>
                                 ))}
                             </select>
-                            <select className="double-dropdown">
-                                <option default>Max Carbs</option>
+                            <select name="selectedMaxCarbs" onChange={handleChange} className="double-dropdown">
+                                <option disabled selected value>Max Carbs</option>
                                 {carbs.map(carbs => (
                                     <option key={carbs.value} value={carbs.value}>{carbs.label}</option>
                                 ))}

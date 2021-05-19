@@ -51,26 +51,19 @@ exports.index = (req, res) => {
 }
 
 exports.searchRecipes = (req, res) => {
-    // const diet = req.params;
-    // const cuisine = req.params;
-    // const intolerence = req.params;
-    // const minKcal = req.params;
-    // const maxKcal = req.params;
-    // const minProtein = req.params;
-    // const maxProtein = req.params;
-    // const minCarbs = req.params;
-    // const maxCarbs = req.params;
+    console.log(req.query);
+    res.send(req.query);
 
-    request(
-        `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=2&addRecipeNutrition=true`,
-        function(error, response, body) {
-            if (!error && response.statusCode == 200) {
-                var parseBody = JSON.parse(body);
-                var data = parseBody;
-                res.send(data);
-            }
-        }
-    );
+    // request(
+    //     `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=2&addRecipeNutrition=true`,
+    //     function(error, response, body) {
+    //         if (!error && response.statusCode == 200) {
+    //             var parseBody = JSON.parse(body);
+    //             var data = parseBody;
+    //             res.send(data);
+    //         }
+    //     }
+    // );
 }
 
 exports.getRecipe = (req, res) => {

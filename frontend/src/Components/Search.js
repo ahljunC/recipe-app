@@ -145,19 +145,17 @@ export default function Search() {
     }
 
     const handleSubmit = (event) => {
-        alert(selectedDiet);
-
         axios.get('/recipe/search', {
             params: {
                 diet: selectedDiet,
-                cuisine: selectedCuisine,
-                intolerance: selectedIntolerance,
-                minCal: selectedMinCal,
-                maxcal: selectedMaxCal,
-                minProt: selectedMinProt,
-                maxProt: selectedMaxProt,
-                minCarbs: selectedMinCarbs,
-                maxCarbs: selectedMaxCarbs
+                // cuisine: selectedCuisine,
+                // intolerance: selectedIntolerance,
+                // minCal: selectedMinCal,
+                // maxcal: selectedMaxCal,
+                // minProt: selectedMinProt,
+                // maxProt: selectedMaxProt,
+                // minCarbs: selectedMinCarbs,
+                // maxCarbs: selectedMaxCarbs
             }
         }).then(function (response) {
             console.log(response);

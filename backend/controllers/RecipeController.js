@@ -1,5 +1,6 @@
 var request = require("request");
 const apiKey = process.env.API_KEY;
+const axios = require('axios');
 
 require('dotenv').config();
 
@@ -51,8 +52,23 @@ exports.index = (req, res) => {
 }
 
 exports.searchRecipes = (req, res) => {
-    console.log(req.query);
-    res.send(req.query);
+    // console.log(req.query);
+    res.send(req.query.diet);
+    
+    axios.get('https://api.spoonacular.com/recipes/complexSearch', {
+        params: {
+            apiKey: apiKey,
+            diet: req.query.diet,
+            cuisine: req.query.cuisine,
+            intolerance: req.query.intolerance,
+            minCal: req.query.minCal,
+            maxCal: req.query.maxCal
+        }
+    }).then(function (response) {
+        console.log(response);
+    }).catch(function (error) {
+        console.log(error);
+    })
 
     // request(
     //     `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=2&addRecipeNutrition=true`,
